@@ -1,4 +1,4 @@
-require('dotenv').config(); // Load env vars at the top
+require('dotenv').config(); // Load environment variables
 
 const express = require('express');
 const http = require('http');
@@ -9,7 +9,18 @@ const Room = require('./models/Room');
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: '*' } });
+
+// Serve a simple status page (optional)
+app.get('/', (req, res) => {
+  res.send('Quiz Game Server is running 🚀');
+});
+
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST']
+  }
+});
 
 const rooms = {};
 const timers = {};
